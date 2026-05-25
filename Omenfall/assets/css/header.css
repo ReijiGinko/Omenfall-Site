@@ -1,0 +1,300 @@
+/* ============================================================
+   OMENFALL — HEADER & NAVIGATION
+   ============================================================ */
+
+/* ── Site Header Wrapper ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* ── Topbar ── */
+.topbar {
+  background: var(--surface-01);
+  border-bottom: 1px solid var(--border-subtle);
+  height: var(--topbar-height);
+  width: 100%;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+}
+
+/* Logo */
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  background: var(--rojo);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-icon svg { color: var(--ghost-white); }
+
+.logo-wordmark {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ghost-white);
+  line-height: 1;
+}
+
+.logo-wordmark span { color: var(--rojo); }
+
+/* Topbar Search */
+.topbar-search {
+  flex: 1;
+  max-width: 340px;
+  margin-left: auto;
+}
+
+/* Topbar Auth */
+.topbar-auth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ── Main Nav ── */
+.main-nav {
+  background: var(--surface-02);
+  border-bottom: 2px solid var(--border-subtle);
+  height: var(--nav-height);
+  width: 100%;
+  position: relative;
+}
+
+.main-nav::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rojo) 0%, var(--rojo-dark) 40%, transparent 100%);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  gap: 0;
+}
+
+/* Nav Items */
+.nav-item {
+  position: relative;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 100%;
+  padding: 0 16px;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: color var(--transition-fast), background var(--transition-fast);
+  cursor: pointer;
+}
+
+.nav-link:hover,
+.nav-item:hover > .nav-link,
+.nav-link.active {
+  color: var(--ghost-white);
+  background: var(--surface-03);
+}
+
+.nav-link svg { flex-shrink: 0; }
+
+/* Dropdown */
+.nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--surface-02);
+  border: 1px solid var(--border-mid);
+  border-top: 2px solid var(--rojo);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-base), visibility var(--transition-base),
+              transform var(--transition-base);
+  z-index: 999;
+  pointer-events: none;
+}
+
+.nav-item:hover .nav-dropdown,
+.nav-item:focus-within .nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.dropdown-group { padding: 8px 0; }
+
+.dropdown-group + .dropdown-group {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.dropdown-label {
+  padding: 6px 18px 4px;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--rojo);
+}
+
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast), background var(--transition-fast);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdown-link:hover {
+  color: var(--ghost-white);
+  background: var(--surface-03);
+}
+
+.dropdown-link .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--rojo);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.dropdown-link:hover .dot { opacity: 1; }
+
+/* ── Mobile Menu Toggle ── */
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--surface-03);
+  border-radius: var(--radius-sm);
+  color: var(--ghost-white);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Mobile Drawer ── */
+.mobile-drawer {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(9,9,9,0.95);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 300ms ease;
+}
+
+.mobile-drawer.open { transform: translateX(0); }
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.mobile-drawer-close {
+  width: 36px;
+  height: 36px;
+  background: var(--surface-03);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ghost-white);
+  cursor: pointer;
+}
+
+.mobile-nav-section { border-bottom: 1px solid var(--border-subtle); }
+
+.mobile-nav-title {
+  padding: 14px 24px;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--rojo);
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 32px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+  text-decoration: none;
+}
+
+.mobile-nav-link:hover { color: var(--ghost-white); }
+
+.mobile-auth {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .main-nav { display: none; }
+  .mobile-menu-toggle { display: flex; }
+  .mobile-drawer { display: block; }
+  .topbar-search { max-width: 220px; }
+}
+
+@media (max-width: 640px) {
+  .content-wrap {
+    width: 92%;
+  }
+  .logo-wordmark { font-size: 1.2rem; }
+  .topbar-search { display: none; }
+}
