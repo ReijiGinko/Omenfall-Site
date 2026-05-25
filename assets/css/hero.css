@@ -1,0 +1,281 @@
+/* ============================================================
+   OMENFALL — HERO SLIDESHOW
+   ============================================================ */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - var(--topbar-height) - var(--nav-height));
+  overflow: hidden;
+  background: var(--vampire);
+}
+
+/* Slide Track */
+.hero-slides { position: relative; width: 100%; height: 100%; }
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 700ms ease, visibility 700ms ease;
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--topbar-height) - var(--nav-height));
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+
+/* Slide Background */
+.hero-slide-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(9,9,9,0.92) 0%,
+    rgba(9,9,9,0.70) 45%,
+    rgba(9,9,9,0.25) 100%
+  );
+}
+
+/* Slide Content */
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 80px 0;
+}
+
+.hero-slide-inner {
+  max-width: 640px;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--rojo);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms ease 200ms, transform 500ms ease 200ms;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--rojo);
+}
+
+.hero-slide.active .hero-eyebrow { opacity: 1; transform: translateY(0); }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  color: var(--ghost-white);
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms ease 350ms, transform 500ms ease 350ms;
+}
+
+.hero-title span { color: var(--rojo); }
+.hero-slide.active .hero-title { opacity: 1; transform: translateY(0); }
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: rgba(232,235,247,0.8);
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 500px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 500ms ease 480ms, transform 500ms ease 480ms;
+}
+
+.hero-slide.active .hero-desc { opacity: 1; transform: translateY(0); }
+
+.hero-cta {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease 580ms, transform 500ms ease 580ms;
+}
+
+.hero-slide.active .hero-cta { opacity: 1; transform: translateY(0); }
+
+/* ── Nav Arrows ── */
+.hero-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 52px;
+  height: 52px;
+  background: rgba(9,9,9,0.7);
+  border: 2px solid var(--border-mid);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ghost-white);
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base),
+              box-shadow var(--transition-base);
+  backdrop-filter: blur(8px);
+}
+
+.hero-arrow:hover {
+  background: var(--rojo);
+  border-color: var(--rojo);
+  box-shadow: var(--shadow-accent);
+}
+
+.hero-arrow-prev { left: 20px; }
+.hero-arrow-next { right: 20px; }
+
+/* ── Progress Indicators ── */
+.hero-indicators {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.hero-indicators-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-indicator {
+  flex: 1;
+  max-width: 120px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.indicator-label {
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-base);
+}
+
+.hero-indicator.active .indicator-label { color: var(--ghost-white); }
+
+.indicator-bar {
+  height: 3px;
+  background: var(--surface-05);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.indicator-fill {
+  height: 100%;
+  background: var(--rojo);
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0ms linear;
+}
+
+.hero-indicator.active .indicator-fill {
+  transition: width 5000ms linear;
+  width: 100%;
+}
+
+.hero-indicator.paused .indicator-fill {
+  transition: none;
+}
+
+/* Pause Button */
+.hero-pause {
+  position: absolute;
+  bottom: 32px;
+  right: 20px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  background: rgba(9,9,9,0.7);
+  border: 1px solid var(--border-mid);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  backdrop-filter: blur(8px);
+}
+
+.hero-pause:hover {
+  color: var(--ghost-white);
+  border-color: var(--border-strong);
+}
+
+/* ── Slide BG Colors (fallback when no image) ── */
+.hero-slide:nth-child(1) .hero-slide-bg { background: linear-gradient(135deg, #0d0d0d 0%, #1a0505 100%); }
+.hero-slide:nth-child(2) .hero-slide-bg { background: linear-gradient(135deg, #0a0a12 0%, #090909 100%); }
+.hero-slide:nth-child(3) .hero-slide-bg { background: linear-gradient(135deg, #0d0a00 0%, #090909 100%); }
+.hero-slide:nth-child(4) .hero-slide-bg { background: linear-gradient(135deg, #000d0d 0%, #090909 100%); }
+.hero-slide:nth-child(5) .hero-slide-bg { background: linear-gradient(135deg, #06000d 0%, #090909 100%); }
+.hero-slide:nth-child(6) .hero-slide-bg { background: linear-gradient(135deg, #0d0005 0%, #090909 100%); }
+
+/* Decorative corner accent */
+.hero-slide::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at top right, rgba(222,26,26,0.06), transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .hero-title { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+  .hero-arrow { width: 40px; height: 40px; }
+  .hero-arrow-prev { left: 10px; }
+  .hero-arrow-next { right: 10px; }
+  .hero-indicators-inner { gap: 6px; }
+  .indicator-label { display: none; }
+  .hero-indicator { max-width: 60px; }
+}

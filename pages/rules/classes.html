@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes — Omenfall</title>
+  <link rel="stylesheet" href="../../css/variables.css">
+  <link rel="stylesheet" href="../../css/components.css">
+  <link rel="stylesheet" href="../../css/header.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <style>
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .class-card {
+      background: var(--surface-02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: border-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .class-card:hover {
+      border-color: rgba(222,26,26,0.4);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .class-card-banner {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .class-card-banner-letter {
+      font-family: var(--font-display);
+      font-size: 7rem;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      right: -8px;
+      bottom: -16px;
+      letter-spacing: -0.05em;
+      user-select: none;
+    }
+
+    .class-card-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background: rgba(222,26,26,0.15);
+      border: 2px solid rgba(222,26,26,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--rojo);
+      position: relative;
+      z-index: 1;
+    }
+
+    .class-card-body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .class-card-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--ghost-white);
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+    }
+
+    .class-card-tagline {
+      font-size: 0.82rem;
+      color: var(--rojo);
+      font-weight: 600;
+      font-family: var(--font-ui);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
+    .class-card-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .class-card-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .class-stat {
+      background: var(--surface-03);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      text-align: center;
+    }
+
+    .class-stat-label {
+      font-family: var(--font-ui);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .class-stat-value {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ghost-white);
+    }
+
+    .class-card-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .subclass-count {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .subclass-count strong { color: var(--text-secondary); }
+
+    /* Banner colors per class archetype */
+    .banner-martial  { background: linear-gradient(135deg, #1a0a00, #2a1500); }
+    .banner-magic    { background: linear-gradient(135deg, #0a001a, #150028); }
+    .banner-divine   { background: linear-gradient(135deg, #001a14, #002820); }
+    .banner-rogue    { background: linear-gradient(135deg, #0d0d0d, #1a1a0a); }
+    .banner-nature   { background: linear-gradient(135deg, #001a00, #0a1a05); }
+    .banner-dark     { background: linear-gradient(135deg, #1a0000, #090909); }
+    .banner-tech     { background: linear-gradient(135deg, #001028, #001830); }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+
+<div class="page-hero">
+  <div class="content-wrap page-hero-inner">
+    <div class="breadcrumb">
+      <a href="../../index.html" class="breadcrumb-item">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item active">Classes</span>
+    </div>
+    <div class="page-hero-label">Game Rules</div>
+    <h1 class="page-hero-title">Classes</h1>
+    <p class="page-hero-desc">Eighteen distinct paths of power await. From the scholarly Wizard to the fearsome Death Knight, your class defines how you fight, cast, and change the world.</p>
+  </div>
+</div>
+<div class="divider-red"></div>
+
+<main class="page-main">
+  <div class="content-wrap">
+
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:32px;align-items:center">
+      <div class="search-input-wrap" style="flex:1;max-width:360px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" class="search-input" id="class-search" placeholder="Search classes...">
+      </div>
+      <div class="filter-bar" id="role-filter" style="margin-bottom:0">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="martial">Martial</button>
+        <button class="filter-btn" data-filter="magic">Magic</button>
+        <button class="filter-btn" data-filter="divine">Divine</button>
+        <button class="filter-btn" data-filter="nature">Nature</button>
+        <button class="filter-btn" data-filter="stealth">Stealth</button>
+      </div>
+    </div>
+
+    <div class="class-grid" id="class-grid">
+
+      <!-- Alchemist -->
+      <div class="class-card" data-role="magic" data-name="alchemist">
+        <div class="class-card-banner banner-tech">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6l2 7H7zm0 0L7 10m6-7l2 7M7 10a5 5 0 0 0 10 0"/></svg>
+          </div>
+          <div class="class-card-banner-letter">A</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Alchemist</div>
+          <div class="class-card-tagline">"The answer is always chemistry."</div>
+          <p class="class-card-desc">Masters of transmutation and chemical craft, Alchemists blend arcane knowledge with scientific method to brew devastating concoctions, heal grievous wounds, and reshape the battlefield.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">INT</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">INT/CON</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/alchemist.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barbarian -->
+      <div class="class-card" data-role="martial" data-name="barbarian">
+        <div class="class-card-banner banner-martial">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14.5c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.83 8 21v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
+          </div>
+          <div class="class-card-banner-letter">B</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Barbarian</div>
+          <div class="class-card-tagline">"Rage is not a weakness. It is a weapon."</div>
+          <p class="class-card-desc">Primal warriors who channel raw fury into devastating power. When a Barbarian rages, they become nearly unstoppable — shrugging off blows that would fell lesser fighters and dealing punishment in return.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">STR</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d12</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">STR/CON</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/barbarian.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bard -->
+      <div class="class-card" data-role="magic" data-name="bard">
+        <div class="class-card-banner banner-magic">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <div class="class-card-banner-letter">B</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Bard</div>
+          <div class="class-card-tagline">"Every story is a spell. I know all of them."</div>
+          <p class="class-card-desc">Bards weave magic through music, words, and performance. Masters of inspiration and versatility, they support allies, manipulate enemies, and unlock secrets that others never knew to look for.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">CHA</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">DEX/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/bard.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloodmage -->
+      <div class="class-card" data-role="magic" data-name="bloodmage">
+        <div class="class-card-banner banner-dark">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/></svg>
+          </div>
+          <div class="class-card-banner-letter">B</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Bloodmage</div>
+          <div class="class-card-tagline">"Life is currency. I spend it wisely."</div>
+          <p class="class-card-desc">Bloodmages harness the raw power hidden in vital essence itself. They sacrifice their own life force to fuel devastating spells, trading health for power in dangerous ways that other mages dare not attempt.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">CON</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d6</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">CON/INT</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/bloodmage.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cleric -->
+      <div class="class-card" data-role="divine" data-name="cleric">
+        <div class="class-card-banner banner-divine">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div class="class-card-banner-letter">C</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Cleric</div>
+          <div class="class-card-tagline">"Faith is not blind. It is armor."</div>
+          <p class="class-card-desc">Divine spellcasters who channel the power of their deity, Clerics serve as healers, warriors, and spiritual guides. Their power comes not from study but from devotion — and that devotion is absolute.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">WIS</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">WIS/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/cleric.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Corsair -->
+      <div class="class-card" data-role="martial" data-name="corsair">
+        <div class="class-card-banner banner-tech">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l4-8 4 4 4-6 4 10"/><path d="M3 21h18"/></svg>
+          </div>
+          <div class="class-card-banner-letter">C</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Corsair</div>
+          <div class="class-card-tagline">"Rules are for those who can't fight their way out."</div>
+          <p class="class-card-desc">Swashbuckling warriors of the sea and sky, Corsairs blend martial prowess with a free-spirited approach to combat. Dashing, unpredictable, and dangerous, they are equally at home on a ship deck or a rooftop.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">DEX</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">DEX/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/corsair.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Death Knight -->
+      <div class="class-card" data-role="martial" data-name="death-knight">
+        <div class="class-card-banner banner-dark">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <div class="class-card-banner-letter">D</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Death Knight</div>
+          <div class="class-card-tagline">"Death is not an end. It is a promotion."</div>
+          <p class="class-card-desc">Warriors who have embraced necromantic power, Death Knights are relentless juggernauts of undead might. They command the dead, drain life from the living, and shrug off punishment that would destroy anyone else.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">STR</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">STR/CON</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/death-knight.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Druid -->
+      <div class="class-card" data-role="nature" data-name="druid">
+        <div class="class-card-banner banner-nature">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><path d="M8 5.07A10 10 0 0 1 22 12"/><path d="M2 12A10 10 0 0 1 16 5.07"/></svg>
+          </div>
+          <div class="class-card-banner-letter">D</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Druid</div>
+          <div class="class-card-tagline">"The wild does not ask permission."</div>
+          <p class="class-card-desc">Guardians of the natural world, Druids command the forces of nature and transform into beasts. They draw magic from the living world around them, making them as unpredictable as the wilds themselves.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">WIS</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">INT/WIS</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/druid.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fighter -->
+      <div class="class-card" data-role="martial" data-name="fighter">
+        <div class="class-card-banner banner-martial">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>
+          </div>
+          <div class="class-card-banner-letter">F</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Fighter</div>
+          <div class="class-card-tagline">"Mastery of combat is mastery of self."</div>
+          <p class="class-card-desc">The pinnacle of martial training, Fighters are the most versatile and capable weapon masters in Omenfall. Through relentless discipline and battle experience, they achieve feats of combat others can only dream of.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">STR/DEX</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">STR/CON</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/fighter.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gunslinger -->
+      <div class="class-card" data-role="martial" data-name="gunslinger">
+        <div class="class-card-banner banner-tech">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+          </div>
+          <div class="class-card-banner-letter">G</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Gunslinger</div>
+          <div class="class-card-tagline">"Fastest draw wins. I always win."</div>
+          <p class="class-card-desc">The deadliest marksmen in Omenfall, Gunslingers combine precision shooting with mechanical ingenuity. They engineer their own weapons, develop legendary trick shots, and bring a new era of ranged warfare to the world.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">DEX</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">DEX/INT</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/gunslinger.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monk -->
+      <div class="class-card" data-role="martial" data-name="monk">
+        <div class="class-card-banner banner-divine">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="class-card-banner-letter">M</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Monk</div>
+          <div class="class-card-tagline">"The body is the weapon. The mind pulls the trigger."</div>
+          <p class="class-card-desc">Masters of ki — the life force flowing through all things — Monks achieve superhuman feats of speed, endurance, and precision. They transform their bodies into the ultimate weapon through years of rigorous discipline.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">DEX/WIS</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">STR/DEX</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/monk.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paladin -->
+      <div class="class-card" data-role="divine" data-name="paladin">
+        <div class="class-card-banner banner-divine">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="class-card-banner-letter">P</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Paladin</div>
+          <div class="class-card-tagline">"The oath is the power. Break it and you break yourself."</div>
+          <p class="class-card-desc">Holy warriors bound by sacred oaths, Paladins combine the best of martial might and divine magic. Their oaths grant them extraordinary power — and demand they live up to every word they swore.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">STR/CHA</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">WIS/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/paladin.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ranger -->
+      <div class="class-card" data-role="nature" data-name="ranger">
+        <div class="class-card-banner banner-nature">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/></svg>
+          </div>
+          <div class="class-card-banner-letter">R</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Ranger</div>
+          <div class="class-card-tagline">"I know every path. I choose the one you don't see."</div>
+          <p class="class-card-desc">Wanderers, trackers, and hunters, Rangers are the masters of wilderness and survival. They bond with animal companions, hunt favored enemies with lethal precision, and navigate terrain that would doom others.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">DEX/WIS</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d10</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">STR/DEX</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/ranger.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rogue -->
+      <div class="class-card" data-role="stealth" data-name="rogue">
+        <div class="class-card-banner banner-rogue">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="class-card-banner-letter">R</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Rogue</div>
+          <div class="class-card-tagline">"If you saw me coming, you weren't the target."</div>
+          <p class="class-card-desc">Cunning operatives of the shadows, Rogues strike precisely and vanish. They get into places they shouldn't, know things they weren't meant to know, and deliver lethal sneak attacks when their enemies least expect it.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">DEX</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">DEX/INT</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/rogue.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sorcerer -->
+      <div class="class-card" data-role="magic" data-name="sorcerer">
+        <div class="class-card-banner banner-magic">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="class-card-banner-letter">S</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Sorcerer</div>
+          <div class="class-card-tagline">"Magic isn't something I learned. It's something I am."</div>
+          <p class="class-card-desc">Sorcerers don't study magic — they were born with it surging through their blood. Drawing on an innate wellspring of power tied to their draconic, fey, or aberrant bloodline, they shape spells in ways no wizard can replicate.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">CHA</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d6</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">CON/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/sorcerer.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summoner -->
+      <div class="class-card" data-role="magic" data-name="summoner">
+        <div class="class-card-banner banner-magic">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <div class="class-card-banner-letter">S</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Summoner</div>
+          <div class="class-card-tagline">"I don't fight alone. I never fight alone."</div>
+          <p class="class-card-desc">Summoners form powerful magical bonds with a single devoted companion — their Eidolon — and spend their careers growing this bond into something truly extraordinary. Their Eidolon is an extension of their own soul made manifest.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">CHA</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">CON/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/summoner.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Warlock -->
+      <div class="class-card" data-role="magic" data-name="warlock">
+        <div class="class-card-banner banner-dark">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="class-card-banner-letter">W</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Warlock</div>
+          <div class="class-card-tagline">"My patron gave me power. I give them results."</div>
+          <p class="class-card-desc">Warlocks strike deals with powerful otherworldly patrons — primordial entities, grave powers, or veilfire beings — in exchange for eldritch power. The deal always has terms. The Warlock always finds a way to make it work in their favor.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">CHA</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d8</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">WIS/CHA</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/warlock.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wizard -->
+      <div class="class-card" data-role="magic" data-name="wizard">
+        <div class="class-card-banner banner-magic">
+          <div class="class-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div class="class-card-banner-letter">W</div>
+        </div>
+        <div class="class-card-body">
+          <div class="class-card-name">Wizard</div>
+          <div class="class-card-tagline">"Knowledge is power. I have a great deal of both."</div>
+          <p class="class-card-desc">The most academically rigorous of spellcasters, Wizards achieve their vast power through exhaustive study and encyclopedic knowledge of the arcane. They learn more spells than any other class and bend those spells to their will through metamagic mastery.</p>
+          <div class="class-card-stats">
+            <div class="class-stat"><div class="class-stat-label">Primary</div><div class="class-stat-value">INT</div></div>
+            <div class="class-stat"><div class="class-stat-label">Hit Die</div><div class="class-stat-value">d6</div></div>
+            <div class="class-stat"><div class="class-stat-label">Saves</div><div class="class-stat-value">INT/WIS</div></div>
+          </div>
+          <div class="class-card-footer">
+            <span class="subclass-count"><strong>3</strong> subclasses</span>
+            <a href="../../pages/classes/wizard.html" class="btn btn-primary btn-sm">See Full Class Details</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /class-grid -->
+  </div>
+</main>
+
+<div id="footer-placeholder"></div>
+<script src="../../js/layout.js"></script>
+<script src="../../js/main.js"></script>
+<script>
+  document.getElementById('class-search').addEventListener('input', function() {
+    const q = this.value.toLowerCase().trim();
+    document.querySelectorAll('.class-card').forEach(card => {
+      const name = card.dataset.name || '';
+      card.style.display = (!q || name.includes(q)) ? '' : 'none';
+    });
+  });
+
+  document.querySelectorAll('#role-filter .filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#role-filter .filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const filter = this.dataset.filter;
+      document.querySelectorAll('.class-card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.role === filter) ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
